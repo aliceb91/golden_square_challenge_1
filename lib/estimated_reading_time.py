@@ -16,7 +16,8 @@ def estimated_reading_time(text):
     string_list = len(text.split())
     seconds = string_list / word_second
     time_string = str(datetime.timedelta(seconds=seconds))
+    if time_string [1] == ":":
+        time_string = "0" + time_string
     if seconds % 1 == 0:
-        return f"Estimated reading time: 0{time_string}.00"
-    else:
-        return f"Estimated reading time: 0{time_string[:10]}"
+        return f"Estimated reading time: {time_string}.00"
+    return f"Estimated reading time: {time_string[:11]}"
