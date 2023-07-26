@@ -15,7 +15,7 @@ def decode(encrypted, key):
 
     plaintext_chars = []
     for i in encrypted:
-        plain_char = cipher[65 - ord(i)]
+        plain_char = cipher[(65 - ord(i)) * -1]
         print(65 - ord(i))
         plaintext_chars.append(plain_char)
 
@@ -46,3 +46,9 @@ print(f"""
 Expected: theswiftfoxjumpedoverthelazydog
   Actual: {decode('EMBAXNKEKSYOVQTBJSWBDEMBPHZGJSL', 'secretkey')}
 """)
+
+#print(f"""
+# Running: decode("E", "secretkey")
+#Expected: t
+#  Actual: {decode('E', 'secretkey')}
+#""")
