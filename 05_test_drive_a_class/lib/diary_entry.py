@@ -1,4 +1,5 @@
 import datetime
+import math
 
 class DiaryEntry:
     def __init__(self, title, contents):
@@ -9,6 +10,7 @@ class DiaryEntry:
         """
         self.title = title
         self.contents = contents
+        self.counter = 0
 
     def format(self):
         """
@@ -35,8 +37,8 @@ class DiaryEntry:
             int: an estimate of the reading time in minutes for the contents at
                 the given wpm.
         """
-        seconds = len(self.format().split()) / (wpm / 60)
-        return str(datetime.timedelta(seconds = seconds))
+        minutes = math.floor(len(self.format().split()) / wpm)
+        return str(datetime.timedelta(minutes = minutes))[:-3]
 
     def reading_chunk(self, wpm, minutes):
         """
@@ -53,4 +55,10 @@ class DiaryEntry:
         skipping what has already been read, until the contents is fully read.
         The next call after that should restart from the beginning.
         """
-        pass
+        full_contents = self.format()
+        total_words = round(wpm * minutes)
+        formated_list = full_contents.split()
+        temp_counter = self.counter
+        end_position = total_words + temp_counter
+        self.counter += total_words
+        return " ".join(formated_list[temp_counter:end_position])
