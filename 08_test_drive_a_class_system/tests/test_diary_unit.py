@@ -29,3 +29,4 @@ def test_pull_all_entries():
     diary.add(sample_entry_3)
     result = diary.all()
     assert result == [sample_entry_1, sample_entry_2, sample_entry_3]
+    

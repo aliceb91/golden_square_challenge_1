@@ -21,7 +21,10 @@ class Diary():
         #   An integer representing the number of words in all diary entries
         # HINT:
         #   This method should make use of the `count_words` method on DiaryEntry.
-        pass
+        total = 0
+        for entry in self.entries:
+            total += entry.count_words()
+        return total
 
     def reading_time(self, wpm):
         # Parameters:
@@ -30,7 +33,7 @@ class Diary():
         # Returns:
         #   An integer representing an estimate of the reading time in minutes
         #   if the user were to read all entries in the diary.
-        pass
+        return self.count_words() / wpm
 
     def find_best_entry_for_reading_time(self, wpm, minutes):
         # Parameters:
@@ -42,5 +45,15 @@ class Diary():
         #   An instance of DiaryEntry representing the entry that is closest to,
         #   but not over, the length that the user could read in the minutes
         #   they have available given their reading speed.
-        pass
-
+        current_best = None
+        current_best_index = None
+        max_words = wpm * minutes
+        for entry in self.entries:
+            if (entry.count_words() - max_words) >= 0:
+                if current_best == None:
+                    current_best = entry
+                    current_best_index = self.entries.index(entry)
+                if (entry.count_words() - max_words) < (current_best.count_words() - max_words):
+                    current_best = entry
+                    current_best_index = self.entries.index(entry)
+        return self.entries[current_best_index]
